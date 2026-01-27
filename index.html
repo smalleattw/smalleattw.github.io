@@ -421,96 +421,130 @@
   </div>
 
   <script>
-    const courses = [
-      { title:"滷肉飯：油脂管理與回鍋香氣", tags:["熱門","基礎"], meta:"2.5 小時｜入門", cta:"立即體驗" },
-      { title:"雞排：醃料比例與油溫控制", tags:["人氣","實作"], meta:"3 小時｜中階", cta:"查看課綱" },
-      { title:"蚵仔煎：粉漿口感與火候節奏", tags:["最新","技巧"], meta:"2 小時｜入門", cta:"立即體驗" },
-      { title:"滷味：湯底建立與食材處理", tags:["系列課","配方"], meta:"4 小時｜中階", cta:"查看課綱" },
-      { title:"珍奶：茶底與糖度校準", tags:["熱門","商用"], meta:"2 小時｜入門", cta:"查看課綱" },
-      { title:"鹽酥：炸粉、裹粉、回潮對策", tags:["技巧","實作"], meta:"3.5 小時｜中階", cta:"立即體驗" }
-    ];
+  let courses = [];
 
-    const news = [
-      { date:"2026-01-27", title:"平台前端示範版上線", body:"首頁一頁式完成：熱門課程、最新資訊、體驗、註冊/登入（UI）。" },
-      { date:"2026-01-25", title:"新增：課程卡片模組", body:"支援 tag、時數、難度與 CTA，後續可接課程詳頁。" },
-      { date:"2026-01-20", title:"規劃：會員系統串接", body:"建議先用 Firebase / Supabase 快速完成註冊登入與權限。" }
-    ];
+  const news = [
+    { date:"2026-01-27", title:"平台前端示範版上線", body:"首頁一頁式完成：熱門課程、最新資訊、體驗、註冊/登入（UI）。" },
+    { date:"2026-01-25", title:"新增：課程卡片模組", body:"支援 tag、時數、難度與 CTA，後續可接課程詳頁。" },
+    { date:"2026-01-20", title:"規劃：會員系統串接", body:"建議先用 Firebase / Supabase 快速完成註冊登入與權限。" }
+  ];
 
-    const $ = (s)=>document.querySelector(s);
+  const $ = (s)=>document.querySelector(s);
 
-    function renderCourses(){
-      const grid = $("#courseGrid");
-      grid.innerHTML = courses.map((c,i)=>`
-        <div class="card">
-          <div class="tag-row">${c.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
-          <h3>${c.title}</h3>
-          <div class="meta">${c.meta}</div>
-          <div class="actions">
-            <button class="btn small primary" onclick="openSignup()">${c.cta}</button>
-            <button class="btn small" onclick="alert('之後可連到課程詳頁：/course/${i}');">了解更多</button>
-          </div>
+  function renderCourses(courseList){
+    const grid = $("#courseGrid");
+    grid.innerHTML = (courseList || []).map((c,i)=>`
+      <div class="card">
+        <div class="tag-row">${(c.tags || []).map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+        <h3>${c.title || "（未命名課程）"}</h3>
+        <div class="meta">${(c.minutes ?? 0)} 分鐘｜${c.level || ""}｜${c.category || ""}</div>
+        <div class="actions">
+          <button class="btn small primary" onclick="openSignup()">${c.cta || "立即體驗"}</button>
+          <button class="btn small" onclick="openCourseDetail('${c.id || i}')">了解更多</button>
         </div>
-      `).join("");
-    }
+      </div>
+    `).join("");
+  }
 
-    function renderNews(){
-      const list = $("#newsList");
-      list.innerHTML = news.map(n=>`
-        <div class="item">
-          <div class="date">${n.date}</div>
-          <div>
-            <b>${n.title}</b>
-            <p>${n.body}</p>
-          </div>
+  function renderNews(){
+    const list = $("#newsList");
+    list.innerHTML = news.map(n=>`
+      <div class="item">
+        <div class="date">${n.date}</div>
+        <div>
+          <b>${n.title}</b>
+          <p>${n.body}</p>
         </div>
-      `).join("");
+      </div>
+    `).join("");
+  }
+
+  async function loadCourses(){
+    const grid = $("#courseGrid");
+    grid.innerHTML = `<div class="muted">載入課程中…</div>`;
+
+    try{
+      // ✅ 這一行就是你問的 fetch 寫法
+      const res = await fetch("./data/courses.json", { cache: "no-store" });
+      if(!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const data = await res.json();
+      courses = Array.isArray(data) ? data : [];
+
+      if(courses.length === 0){
+        grid.innerHTML = `<div class="muted">目前沒有已發布課程（courses.json 可能是空的或都被標記為 draft）。</div>`;
+        return;
+      }
+
+      renderCourses(courses);
+    }catch(err){
+      console.error("Failed to load courses.json:", err);
+      grid.innerHTML = `
+        <div class="muted">
+          讀取課程資料失敗。<br/>
+          1) 請確認 repo 內有 <b>data/courses.json</b><br/>
+          2) 且 GitHub Pages 已部署成功<br/>
+          3) 路徑是否正確：<b>./data/courses.json</b>
+        </div>
+      `;
     }
+  }
 
-    const backdrop = $("#backdrop");
-    const tabSignup = $("#tabSignup");
-    const tabLogin = $("#tabLogin");
-    const authSubmit = $("#authSubmit");
-    const modalTitle = $("#modalTitle");
-    const authFine = $("#authFine");
-    let mode = "signup";
+  function openCourseDetail(id){
+    const c = (courses || []).find(x => x.id === id) || null;
+    alert(c ? `${c.title}\n\n${c.summary || ""}` : `Course: ${id}`);
+  }
 
-    function setMode(m){
-      mode = m;
-      const isSignup = mode === "signup";
-      tabSignup.classList.toggle("active", isSignup);
-      tabLogin.classList.toggle("active", !isSignup);
-      authSubmit.textContent = isSignup ? "建立帳號" : "登入";
-      modalTitle.textContent = isSignup ? "免費註冊" : "會員登入";
-      authFine.textContent = "※ 示範版：目前不會真的" + (isSignup ? "建立帳號" : "登入") + "，後續可串 Firebase / Supabase / 自建 API。";
-    }
+  // Modal
+  const backdrop = $("#backdrop");
+  const tabSignup = $("#tabSignup");
+  const tabLogin = $("#tabLogin");
+  const authSubmit = $("#authSubmit");
+  const modalTitle = $("#modalTitle");
+  const authFine = $("#authFine");
+  let mode = "signup";
 
-    function openModal(m){
-      setMode(m);
-      backdrop.style.display = "flex";
-      backdrop.setAttribute("aria-hidden","false");
-      $("#email").focus();
-    }
-    function closeModal(){
-      backdrop.style.display = "none";
-      backdrop.setAttribute("aria-hidden","true");
-    }
+  function setMode(m){
+    mode = m;
+    const isSignup = mode === "signup";
+    tabSignup.classList.toggle("active", isSignup);
+    tabLogin.classList.toggle("active", !isSignup);
+    authSubmit.textContent = isSignup ? "建立帳號" : "登入";
+    modalTitle.textContent = isSignup ? "免費註冊" : "會員登入";
+    authFine.textContent = "※ 示範版：目前不會真的" + (isSignup ? "建立帳號" : "登入") + "，後續可串 Firebase / Supabase / 自建 API。";
+  }
 
-    function openSignup(){ openModal("signup"); }
-    function openLogin(){ openModal("login"); }
+  function openModal(m){
+    setMode(m);
+    backdrop.style.display = "flex";
+    backdrop.setAttribute("aria-hidden","false");
+    $("#email").focus();
+  }
+  function closeModal(){
+    backdrop.style.display = "none";
+    backdrop.setAttribute("aria-hidden","true");
+  }
 
-    // Bind nav buttons
-    $("#btnSignup").addEventListener("click", openSignup);
-    $("#btnLogin").addEventListener("click", openLogin);
-    $("#btnOpenSignup2").addEventListener("click", openSignup);
-    $("#btnOpenSignup3").addEventListener("click", openSignup);
-    $("#btnOpenLogin2").addEventListener("click", openLogin);
-    $("#btnClose").addEventListener("click", closeModal);
-    backdrop.addEventListener("click", (e)=>{ if(e.target === backdrop) closeModal(); });
-    tabSignup.addEventListener("click", ()=>setMode("signup"));
-    tabLogin.addEventListener("click", ()=>setMode("login"));
+  function openSignup(){ openModal("signup"); }
+  function openLogin(){ openModal("login"); }
+
+  function bindEvents(){
+    // Nav / CTA buttons
+    $("#btnSignup")?.addEventListener("click", openSignup);
+    $("#btnLogin")?.addEventListener("click", openLogin);
+
+    $("#btnOpenSignup2")?.addEventListener("click", openSignup); // ✅ 你原本漏了這個
+    $("#btnOpenSignup3")?.addEventListener("click", openSignup);
+    $("#btnOpenLogin2")?.addEventListener("click", openLogin);
+
+    $("#btnClose")?.addEventListener("click", closeModal);
+    backdrop?.addEventListener("click", (e)=>{ if(e.target === backdrop) closeModal(); });
+
+    tabSignup?.addEventListener("click", ()=>setMode("signup"));
+    tabLogin?.addEventListener("click", ()=>setMode("login"));
 
     // Fake auth submit
-    $("#authForm").addEventListener("submit", (e)=>{
+    $("#authForm")?.addEventListener("submit", (e)=>{
       e.preventDefault();
       const email = $("#email").value.trim();
       alert((mode==="signup"?"已收到註冊資料：":"已收到登入資料：") + email + "（示範）");
@@ -528,17 +562,21 @@
     });
 
     // Suggest
-    $("#btnSuggest").addEventListener("click", ()=>{
+    $("#btnSuggest")?.addEventListener("click", ()=>{
       const g = $("#goal").value.trim();
       $("#suggestOut").textContent = g
         ? `建議你從「基礎刀工 → 比例與秤重 → 火候節奏」三段練起。你的目標：${g}`
         : "先寫下你的學習目標，我再幫你生成建議。";
     });
+  }
 
-    // Init
-    renderCourses();
+  // ✅ 最穩的初始化方式：等 DOM 都 ready 再跑
+  window.addEventListener("DOMContentLoaded", async ()=>{
+    bindEvents();
     renderNews();
     $("#year").textContent = new Date().getFullYear();
-  </script>
+    await loadCourses();
+  });
+</script>
 </body>
 </html>
