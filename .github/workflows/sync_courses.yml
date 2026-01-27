@@ -1,0 +1,42 @@
+name: Sync courses.json from Google Sheets
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "*/30 * * * *"  # 每 30 分鐘一次（可改成每天一次）
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download CSV from published Google Sheet
+        run: |
+          mkdir -p data/_raw
+          curl -L "${{ secrets.SHEETS_CSV_URL }}" -o data/_raw/courses.csv
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Convert CSV -> JSON
+        run: |
+          python scripts/sheets_to_courses.py data/_raw/courses.csv data/courses.json
+
+      - name: Commit changes (if any)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/courses.json
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git commit -m "chore: sync courses.json from sheets"
+          git push
