@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>課程區｜台灣小吃部</title>
+</head>
+<body>
+  <h1>課程區</h1>
+  <p id="who"></p>
+
+  <button id="btnLogout">登出</button>
+
+  <hr/>
+  <h2>我的課程</h2>
+  <ul>
+    <li>滷肉飯（未解鎖）</li>
+    <li>牛肉麵（未解鎖）</li>
+    <li>蛋餅（未解鎖）</li>
+  </ul>
+
+  <script>
+    // 沒登入就踢回登入頁
+    const sessionRaw = localStorage.getItem('twSnackLabSession');
+    if (!sessionRaw) location.href = '/login.html';
+
+    const session = JSON.parse(sessionRaw);
+    document.getElementById('who').textContent = `已登入：${session.email}`;
+
+    document.getElementById('btnLogout').addEventListener('click', () => {
+      localStorage.removeItem('twSnackLabSession');
+      location.href = '/';
+    });
+  </script>
+</body>
+</html>
