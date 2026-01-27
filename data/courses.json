@@ -1,0 +1,80 @@
+[
+  {
+    "id": "lu-rou-fan-001",
+    "title": "滷肉飯：油脂管理與回鍋香氣",
+    "category": "滷味",
+    "level": "入門",
+    "minutes": 150,
+    "tags": ["熱門", "基礎", "台味"],
+    "summary": "從選肉、爆香、滷製到回鍋香氣控制，建立滷肉飯的味譜基礎。",
+    "cover": "",
+    "flavour": { "salty": 5, "sweet": 1, "sour": 1, "spicy": 1, "umami": 5, "numbing": 0 },
+    "texture": { "crispy": 0, "q": 3 },
+    "belonging": ["家常", "便當", "夜市"]
+  },
+  {
+    "id": "chicken-cutlet-001",
+    "title": "雞排：醃料比例與油溫控制",
+    "category": "炸物",
+    "level": "中階",
+    "minutes": 180,
+    "tags": ["人氣", "實作", "夜市"],
+    "summary": "解析雞排醃料的比例邏輯，並掌握炸製時的油溫節奏與回潮對策。",
+    "cover": "",
+    "flavour": { "salty": 4, "sweet": 1, "sour": 0, "spicy": 2, "umami": 4, "numbing": 0 },
+    "texture": { "crispy": 5, "q": 0 },
+    "belonging": ["夜市", "路邊攤"]
+  },
+  {
+    "id": "oyster-omelette-001",
+    "title": "蚵仔煎：粉漿口感與火候節奏",
+    "category": "煎台",
+    "level": "入門",
+    "minutes": 120,
+    "tags": ["最新", "技巧", "台式"],
+    "summary": "學會粉漿比例、蚵仔處理與煎台火候，做出不軟爛的蚵仔煎。",
+    "cover": "",
+    "flavour": { "salty": 3, "sweet": 1, "sour": 1, "spicy": 0, "umami": 4, "numbing": 0 },
+    "texture": { "crispy": 2, "q": 4 },
+    "belonging": ["夜市", "廟口"]
+  },
+  {
+    "id": "braised-snacks-001",
+    "title": "滷味：湯底建立與食材處理",
+    "category": "滷味",
+    "level": "中階",
+    "minutes": 240,
+    "tags": ["系列課", "配方", "家常"],
+    "summary": "從滷湯底架構到各類食材下鍋順序，建立可延續的滷味系統。",
+    "cover": "",
+    "flavour": { "salty": 5, "sweet": 1, "sour": 1, "spicy": 1, "umami": 5, "numbing": 0 },
+    "texture": { "crispy": 0, "q": 2 },
+    "belonging": ["家常", "廟口"]
+  },
+  {
+    "id": "bubble-tea-001",
+    "title": "珍奶：茶底選擇與糖度校準",
+    "category": "飲品",
+    "level": "入門",
+    "minutes": 120,
+    "tags": ["熱門", "商用", "飲料店"],
+    "summary": "理解茶底萃取、糖度曲線與冰量，做出穩定一致的珍奶風味。",
+    "cover": "",
+    "flavour": { "salty": 2, "sweet": 4, "sour": 0, "spicy": 0, "umami": 3, "numbing": 0 },
+    "texture": { "crispy": 0, "q": 3 },
+    "belonging": ["飲料店", "下午茶"]
+  },
+  {
+    "id": "salt-crispy-001",
+    "title": "鹽酥：炸粉、裹粉與回潮對策",
+    "category": "炸物",
+    "level": "中階",
+    "minutes": 210,
+    "tags": ["技巧", "實作", "夜市"],
+    "summary": "比較不同炸粉與裹粉方式，解決鹽酥雞放涼回潮的常見問題。",
+    "cover": "",
+    "flavour": { "salty": 4, "sweet": 1, "sour": 0, "spicy": 2, "umami": 4, "numbing": 0 },
+    "texture": { "crispy": 5, "q": 0 },
+    "belonging": ["夜市", "路邊攤"]
+  }
+]
