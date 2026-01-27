@@ -3,580 +3,764 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>台灣小吃部｜線上學習平台</title>
-  <meta name="description" content="台灣小吃部：保存與傳承小吃手藝的線上學習平台。熱門課程、最新資訊、立即體驗、註冊登入一頁完成。" />
+  <title>台灣小吃部｜線上學習</title>
+  <meta name="description" content="台灣小吃部：用台味把手藝保存下來。熱門課程、最新公告、免登入體驗。" />
   <style>
     :root{
-      --bg:#0b1220;
-      --card:#111a2d;
-      --card2:#0f1730;
-      --text:#eaf0ff;
-      --muted:#a9b6d3;
-      --line:rgba(255,255,255,.12);
-      --brand:#7c5cff;
-      --brand2:#2dd4bf;
-      --shadow: 0 18px 50px rgba(0,0,0,.35);
-      --radius:18px;
+      --paper:#fbf7ee;
+      --ink:#1f1f1f;
+      --muted:#6b6b6b;
+      --line:#e6dccb;
+      --stamp:#cf2e2e;
+      --accent:#0f766e;
+      --card:#fffdf7;
+      --shadow: 0 10px 25px rgba(0,0,0,.08);
+      --radius:14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
-      color:var(--text);
+      font-family:var(--sans);
+      color:var(--ink);
       background:
-        radial-gradient(900px 600px at 20% 5%, rgba(124,92,255,.25), transparent 65%),
-        radial-gradient(800px 500px at 80% 10%, rgba(45,212,191,.18), transparent 60%),
-        radial-gradient(700px 480px at 60% 80%, rgba(124,92,255,.12), transparent 70%),
-        var(--bg);
-      line-height:1.6;
+        radial-gradient(900px 500px at 20% 0%, rgba(207,46,46,.07), transparent 60%),
+        radial-gradient(800px 500px at 80% 10%, rgba(15,118,110,.06), transparent 60%),
+        var(--paper);
+      line-height:1.55;
     }
-    a{color:inherit;text-decoration:none}
-    .container{max-width:1120px;margin:0 auto;padding:0 20px}
-    .nav{
-      position:sticky;top:0;z-index:50;
-      backdrop-filter: blur(12px);
-      background: rgba(11,18,32,.65);
+    a{color:inherit}
+    .container{max-width:980px;margin:0 auto;padding:0 16px}
+    .topbar{
+      position:sticky;top:0;z-index:20;
+      background: rgba(251,247,238,.85);
+      backdrop-filter: blur(8px);
       border-bottom:1px solid var(--line);
     }
-    .nav-inner{
+    .topbar .inner{
       display:flex;align-items:center;justify-content:space-between;
-      padding:14px 0;
+      padding:12px 0;
+      gap:10px;
     }
     .brand{
-      display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px;
+      display:flex;align-items:center;gap:10px;text-decoration:none;
     }
-    .logo{
-      width:34px;height:34px;border-radius:12px;
-      background: linear-gradient(135deg, var(--brand), var(--brand2));
-      box-shadow: 0 10px 30px rgba(124,92,255,.25);
+    .mark{
+      width:34px;height:34px;border-radius:10px;
+      background: linear-gradient(135deg, rgba(207,46,46,.95), rgba(207,46,46,.75));
+      box-shadow: 0 8px 18px rgba(207,46,46,.18);
+      position:relative;
     }
-    .nav-links{display:flex;gap:16px;align-items:center}
-    .nav-links a{
-      padding:8px 10px;border-radius:12px;color:var(--muted);
+    .mark:after{
+      content:"小";
+      position:absolute;inset:0;
+      display:flex;align-items:center;justify-content:center;
+      color:white;font-weight:900;
+      letter-spacing:.1em;
     }
-    .nav-links a:hover{background:rgba(255,255,255,.06);color:var(--text)}
-    .btn{
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      padding:10px 14px;border-radius:14px;
-      cursor:pointer;
-      transition:.18s transform,.18s background,.18s border;
+    .brand-title{
+      font-weight:900;
+      letter-spacing:.06em;
     }
-    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.22)}
-    .btn.primary{
-      border:none;
-      background: linear-gradient(135deg, var(--brand), var(--brand2));
-      box-shadow: 0 16px 40px rgba(124,92,255,.22);
-      color:#061022;
-      font-weight:800;
+    .nav{
+      display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;
+      font-size:14px;
     }
-    .btn.primary:hover{filter:saturate(1.05)}
-    .hero{padding:54px 0 18px}
-    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:stretch}
-    .headline{
-      font-size:42px;line-height:1.15;margin:0 0 12px;font-weight:900;
-      letter-spacing:.2px;
+    .nav a{
+      padding:6px 10px;border-radius:999px;
+      text-decoration:none;color:var(--muted);
+      border:1px solid transparent;
     }
-    .sub{
-      margin:0 0 18px;color:var(--muted);font-size:16px;max-width:54ch;
-    }
-    .cta{display:flex;gap:12px;flex-wrap:wrap}
-    .pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-    .pill{
-      padding:8px 12px;border-radius:999px;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .panel{
-      border:1px solid rgba(255,255,255,.12);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    .nav a:hover{color:var(--ink);border-color:var(--line);background:rgba(255,255,255,.6)}
+    .hero{padding:22px 0 10px}
+    .paper{
+      background: var(--card);
+      border:1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .panel .pad{padding:18px}
-    .kpi{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .kpi .box{
-      background: rgba(17,26,45,.55);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:16px;padding:14px;
+    .paper .pad{padding:16px}
+    .hero-grid{
+      display:grid;grid-template-columns:1.2fr .8fr;gap:14px;
     }
-    .kpi .n{font-size:20px;font-weight:900}
-    .kpi .t{color:var(--muted);font-size:12px;margin-top:2px}
-    .mini{
-      margin-top:12px;
-      display:flex;gap:10px;align-items:center;justify-content:space-between;
-      padding:12px 14px;border-radius:16px;
-      background: rgba(17,26,45,.55);
-      border:1px solid rgba(255,255,255,.10);
-      color:var(--muted);font-size:13px;
+    h1{
+      margin:0 0 10px;
+      font-size:28px;
+      letter-spacing:.02em;
     }
-    .dot{width:10px;height:10px;border-radius:999px;background:var(--brand2);box-shadow:0 0 0 6px rgba(45,212,191,.12)}
-    section{padding:22px 0}
-    .section-title{
-      display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:12px
+    .sub{
+      margin:0 0 14px;
+      color:var(--muted);
+      max-width:60ch;
+      font-size:15px;
     }
-    h2{margin:0;font-size:20px}
+    .stamp{
+      display:inline-flex;align-items:center;gap:8px;
+      border:2px solid var(--stamp);
+      color:var(--stamp);
+      border-radius:999px;
+      padding:6px 10px;
+      font-weight:900;
+      letter-spacing:.08em;
+      font-size:12px;
+      user-select:none;
+      transform: rotate(-1deg);
+    }
+    .btn{
+      appearance:none;border:1px solid var(--line);
+      background:white;
+      color:var(--ink);
+      padding:10px 12px;border-radius:12px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{
+      border-color: transparent;
+      background: var(--stamp);
+      color:white;
+    }
+    .btn.ghost{
+      background:transparent;
+    }
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .kiosk{
+      border-left:2px dashed var(--line);
+      padding-left:14px;
+    }
+    .kiosk h3{margin:0 0 8px;font-size:14px}
+    .kiosk .kv{
+      display:grid;grid-template-columns:1fr 1fr;gap:10px;
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .kv .box{
+      border:1px dashed var(--line);
+      border-radius:12px;
+      padding:10px;
+      background: rgba(251,247,238,.7);
+    }
+
+    section{padding:14px 0}
+    .section-head{
+      display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:10px;
+    }
+    .section-head h2{margin:0;font-size:18px}
     .hint{color:var(--muted);font-size:13px}
 
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .card{
-      background: rgba(17,26,45,.55);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:18px;padding:16px;
-      transition:.18s transform,.18s border,.18s background;
-      display:flex;flex-direction:column;gap:10px;
-      min-height:160px;
+    .controls{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
     }
-    .card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.18);background:rgba(17,26,45,.68)}
-    .tag-row{display:flex;gap:8px;flex-wrap:wrap}
-    .tag{
-      font-size:12px;color:var(--muted);
-      padding:6px 10px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-    }
-    .card h3{margin:2px 0 0;font-size:16px}
-    .meta{color:var(--muted);font-size:13px}
-    .card .actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}
-    .btn.small{padding:9px 12px;border-radius:12px;font-size:13px}
-
-    .news{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
-    .list{
-      background: rgba(17,26,45,.55);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:18px;
-      overflow:hidden;
-    }
-    .item{
-      padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);
-      display:flex;gap:12px;align-items:flex-start
-    }
-    .item:last-child{border-bottom:none}
-    .date{
-      min-width:88px;
-      color:var(--muted);font-size:12px;
-      padding-top:2px
-    }
-    .item b{display:block;font-size:14px}
-    .item p{margin:4px 0 0;color:var(--muted);font-size:13px}
-
-    .demo{
-      display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch
-    }
-    .demo .box{
-      background: rgba(17,26,45,.55);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:18px;padding:16px;
-    }
-    .input{
-      width:100%;
-      padding:12px 12px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      color:var(--text);
+    .input, select{
+      padding:10px 12px;border-radius:12px;
+      border:1px solid var(--line);
+      background:white;
+      font-family:var(--sans);
+      font-size:14px;
       outline:none;
     }
-    .input::placeholder{color:rgba(234,240,255,.45)}
-    .row{display:flex;gap:10px;flex-wrap:wrap}
-    footer{
-      margin-top:26px;
-      border-top:1px solid var(--line);
-      padding:18px 0 26px;
-      color:var(--muted);
-      background: rgba(11,18,32,.45);
-      backdrop-filter: blur(10px);
+    .input{min-width:220px;flex:1}
+    .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{
+      padding:6px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.7);
+      font-size:13px;color:var(--muted);
+      cursor:pointer;
+      user-select:none;
     }
-    .foot{display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap}
-    .foot a{color:var(--text)}
-    .muted{color:var(--muted)}
-    .hide-sm{display:block}
+    .chip.active{
+      border-color: rgba(207,46,46,.35);
+      background: rgba(207,46,46,.08);
+      color: var(--ink);
+      font-weight:800;
+    }
+
+    .menu{
+      border-top:1px solid var(--line);
+    }
+    .menu-row{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap:12px;
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      background: rgba(255,255,255,.55);
+    }
+    .menu-row:hover{background: rgba(255,255,255,.85)}
+    .menu-title{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:baseline;
+    }
+    .menu-title b{font-size:15px}
+    .menu-meta{
+      font-family:var(--mono);
+      font-size:12px;color:var(--muted);
+    }
+    .tag{
+      font-size:12px;
+      padding:3px 8px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      color:var(--muted);
+      background: rgba(251,247,238,.8);
+    }
+    .price{
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+      text-align:right;
+      white-space:nowrap;
+    }
+    .actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:8px}
+
+    .news{
+      display:grid;grid-template-columns:1fr;gap:10px;
+    }
+    .note{
+      padding:12px 14px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background: rgba(255,255,255,.7);
+    }
+    .note b{display:block;margin-bottom:4px}
+    .note .d{font-family:var(--mono);font-size:12px;color:var(--muted)}
+    .note p{margin:6px 0 0;color:var(--muted);font-size:14px}
+
+    .try{
+      display:grid;grid-template-columns:1fr 1fr;gap:12px;
+    }
+    .try .box{
+      border:1px dashed var(--line);
+      border-radius:14px;
+      padding:14px;
+      background: rgba(255,255,255,.7);
+    }
+    .try h3{margin:0 0 8px;font-size:14px}
+    .fine{margin:0;color:var(--muted);font-size:13px}
+
+    footer{
+      margin-top:18px;
+      border-top:1px solid var(--line);
+      padding:16px 0 22px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .foot{
+      display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    }
+    .small{font-size:12px;color:var(--muted)}
+    .right{text-align:right}
 
     /* Modal */
-    .modal-backdrop{
+    .backdrop{
       position:fixed;inset:0;
-      background: rgba(0,0,0,.55);
-      display:none;align-items:center;justify-content:center;
-      padding:18px;z-index:100;
+      background: rgba(0,0,0,.25);
+      display:none;
+      align-items:center;justify-content:center;
+      padding:16px;
+      z-index:50;
     }
     .modal{
-      width:min(520px,100%);
-      border-radius:20px;
-      border:1px solid rgba(255,255,255,.14);
-      background: linear-gradient(180deg, rgba(17,26,45,.92), rgba(15,23,48,.92));
+      width:min(680px,100%);
+      background: var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
       box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .modal-header{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.10)
+    .modal-head{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      background: rgba(251,247,238,.8);
     }
-    .modal-header b{font-size:14px}
-    .tabs{display:flex;gap:8px;padding:12px 16px 0}
-    .tab{
-      padding:8px 10px;border-radius:12px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      color:var(--muted);cursor:pointer;font-size:13px
+    .modal-head b{letter-spacing:.04em}
+    .modal-body{padding:14px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .kv2{
+      border:1px dashed var(--line);
+      border-radius:14px;
+      padding:12px;
+      background: rgba(255,255,255,.65);
     }
-    .tab.active{
-      color:#061022;
-      background: linear-gradient(135deg, var(--brand), var(--brand2));
-      border:none;font-weight:900;
+    .kv2 .k{font-family:var(--mono);font-size:12px;color:var(--muted)}
+    .kv2 .v{margin-top:6px;font-size:14px}
+    .bars{display:grid;gap:8px;margin-top:10px}
+    .bar{
+      display:grid;grid-template-columns:70px 1fr 34px;gap:10px;align-items:center;
+      font-family:var(--mono);font-size:12px;color:var(--muted);
     }
-    .modal-body{padding:14px 16px 16px}
-    .form{display:grid;gap:10px}
-    .fine{font-size:12px;color:var(--muted);margin:0}
-
-    @media (max-width: 920px){
+    .track{height:10px;border-radius:999px;background: rgba(0,0,0,.06);overflow:hidden;border:1px solid var(--line)}
+    .fill{height:100%;background: rgba(207,46,46,.6)}
+    .fill.alt{background: rgba(15,118,110,.55)}
+    @media (max-width: 820px){
       .hero-grid{grid-template-columns:1fr}
-      .news{grid-template-columns:1fr}
-      .demo{grid-template-columns:1fr}
-      .grid3{grid-template-columns:1fr}
-      .headline{font-size:34px}
-      .hide-sm{display:none}
+      .kiosk{border-left:none;border-top:2px dashed var(--line);padding-left:0;padding-top:14px}
+      .try{grid-template-columns:1fr}
+      .grid2{grid-template-columns:1fr}
+      .nav{justify-content:flex-start}
+      h1{font-size:24px}
+      .input{min-width:160px}
     }
   </style>
 </head>
+
 <body>
-  <div class="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="#top" aria-label="回到首頁">
-        <div class="logo" aria-hidden="true"></div>
-        <div>台灣小吃部<span class="muted">｜Learning</span></div>
+  <div class="topbar">
+    <div class="container inner">
+      <a class="brand" href="#top">
+        <div class="mark" aria-hidden="true"></div>
+        <div>
+          <div class="brand-title">台灣小吃部</div>
+          <div class="small">Taiwan Snack Lab</div>
+        </div>
       </a>
-      <div class="nav-links">
-        <a href="#courses">熱門課程</a>
-        <a href="#news">最新資訊</a>
-        <a href="#demo">立即體驗</a>
-        <button class="btn" id="btnLogin">登入</button>
-        <button class="btn primary" id="btnSignup">免費註冊</button>
-      </div>
+      <nav class="nav">
+        <a href="#menu">熱門課程</a>
+        <a href="#news">最新公告</a>
+        <a href="#try">免登入體驗</a>
+        <a href="#contact">聯繫</a>
+      </nav>
     </div>
   </div>
 
   <main id="top" class="container">
     <div class="hero">
-      <div class="hero-grid">
-        <div>
-          <h1 class="headline">把小吃手藝做成<br/>人人都學得會的課程。</h1>
-          <p class="sub">
-            台灣小吃部是一個保存與傳承技藝的平台：熱門課程、最新更新、試上體驗、註冊登入一頁完成。
-          </p>
-          <div class="cta">
-            <a class="btn primary" href="#demo">立即體驗</a>
-            <a class="btn" href="#courses">看看熱門課程</a>
-          </div>
-          <div class="pill-row">
-            <div class="pill">✅ 一頁式瀏覽</div>
-            <div class="pill">✅ 課程卡片＋公告</div>
-            <div class="pill">✅ 註冊/登入彈窗</div>
-            <div class="pill">✅ GitHub Pages 可直接部署</div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="pad">
-            <div class="kpi">
-              <div class="box">
-                <div class="n">12</div>
-                <div class="t">本週新增課程單元</div>
-              </div>
-              <div class="box">
-                <div class="n">3</div>
-                <div class="t">最新活動/公告</div>
-              </div>
+      <div class="paper">
+        <div class="pad hero-grid">
+          <div>
+            <div class="stamp">今日主打｜台味味譜</div>
+            <h1>像小吃店菜單一樣簡單，<br/>把手藝一份一份存下來。</h1>
+            <p class="sub">
+              不用登入也能看課程、試體驗、收藏菜單。<br/>
+              之後真的要付費/跨裝置同步，再加登入就好。
+            </p>
+            <div class="row">
+              <a class="btn primary" href="#menu">看看菜單</a>
+              <a class="btn ghost" href="#try">先試一下</a>
+              <button class="btn" id="btnShowFav">我的收藏</button>
             </div>
-            <div class="mini">
-              <div style="display:flex;gap:10px;align-items:center">
-                <span class="dot" aria-hidden="true"></span>
-                <span>今日推薦：滷肉飯基礎刀工與油脂管理</span>
-              </div>
-              <a class="btn small" href="#courses">查看</a>
-            </div>
-            <div class="mini">
-              <span>你也可以先用「體驗模式」免登入試上 3 分鐘。</span>
-              <a class="btn small" href="#demo">試上</a>
+          </div>
+          <div class="kiosk">
+            <h3>小吃部櫃台</h3>
+            <div class="kv">
+              <div class="box">營業中：<b id="openState">是</b></div>
+              <div class="box">今日上架：<b id="todayCount">—</b></div>
+              <div class="box">熱門分類：<b id="topCat">—</b></div>
+              <div class="box">收藏數：<b id="favCount">0</b></div>
             </div>
             <p class="fine" style="margin-top:10px">
-              ※ 目前為前端示範版：註冊/登入可先接 Firebase / Supabase，或之後串自建 API。
+              ※ 目前是純前端：資料由 <code>data/courses.json</code> 讀取，速度快、成本低。
             </p>
           </div>
         </div>
       </div>
     </div>
 
-    <section id="courses">
-      <div class="section-title">
-        <h2>熱門課程</h2>
-        <div class="hint">快速瀏覽 → 選課 → 同頁註冊/登入</div>
+    <section id="menu">
+      <div class="section-head">
+        <h2>熱門課程（菜單）</h2>
+        <div class="hint">搜尋/分類 → 點一項看詳情</div>
       </div>
-      <div class="grid3" id="courseGrid"></div>
+
+      <div class="paper">
+        <div class="pad">
+          <div class="controls">
+            <input class="input" id="q" placeholder="想學什麼？例如：滷肉、雞排、珍奶…" />
+            <select id="cat">
+              <option value="">全部分類</option>
+            </select>
+            <select id="level">
+              <option value="">全部程度</option>
+              <option value="入門">入門</option>
+              <option value="中階">中階</option>
+              <option value="進階">進階</option>
+            </select>
+            <button class="btn" id="btnReset">清除</button>
+          </div>
+
+          <div style="margin-top:10px" class="chips" id="chipRow"></div>
+        </div>
+
+        <div class="menu" id="menuList">
+          <div class="menu-row">
+            <div class="menu-title"><b>載入中…</b></div>
+            <div class="price">—</div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="news">
-      <div class="section-title">
-        <h2>平台最新資訊</h2>
-        <div class="hint">公告、更新、活動都放這裡</div>
+      <div class="section-head">
+        <h2>最新公告</h2>
+        <div class="hint">像店門口的小黑板</div>
       </div>
-      <div class="news">
-        <div class="list" id="newsList"></div>
-        <div class="panel">
-          <div class="pad">
-            <h3 style="margin:0 0 6px">最新更新</h3>
-            <p class="muted" style="margin:0 0 12px;font-size:13px">
-              你可以把這塊改成：上線里程碑、社群連結、或置頂課程/折扣碼。
-            </p>
-            <div class="row">
-              <button class="btn small" id="btnOpenSignup2">立即加入</button>
-              <a class="btn small" href="#demo">先體驗</a>
+      <div class="news" id="newsList"></div>
+    </section>
+
+    <section id="try">
+      <div class="section-head">
+        <h2>免登入體驗</h2>
+        <div class="hint">先玩一下再決定要不要買單</div>
+      </div>
+      <div class="paper">
+        <div class="pad try">
+          <div class="box">
+            <h3>1 分鐘小測驗</h3>
+            <p class="fine">Q：滷製時「小火」的主要目的？</p>
+            <div class="row" style="margin-top:10px">
+              <button class="btn" data-ans="A">A. 讓表面焦香更快</button>
+              <button class="btn" data-ans="B">B. 讓味道慢慢滲入</button>
+              <button class="btn" data-ans="C">C. 降低成本</button>
             </div>
-            <div style="margin-top:14px" class="muted">
-              <div>📌 下一步：接會員系統、課程詳頁、購買流程</div>
-              <div>🔒 若要付費：建議使用第三方金流或後端開 API</div>
+            <p id="quizOut" class="fine" style="margin-top:10px"></p>
+          </div>
+          <div class="box">
+            <h3>快速推薦（示範）</h3>
+            <p class="fine">輸入你今天想要的感覺，我幫你挑菜單。</p>
+            <div class="row" style="margin-top:10px">
+              <input class="input" id="mood" placeholder="例如：想要脆、微辣、下酒" />
+              <button class="btn primary" id="btnPick">挑 3 個</button>
             </div>
+            <div id="pickOut" class="fine" style="margin-top:10px"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="demo">
-      <div class="section-title">
-        <h2>立即體驗</h2>
-        <div class="hint">同頁完成「看 → 試 → 註冊/登入」</div>
-      </div>
-      <div class="demo">
-        <div class="box">
-          <h3 style="margin:0 0 6px">3 分鐘試上：料理節奏訓練</h3>
-          <p class="muted" style="margin:0 0 12px;font-size:13px">
-            這裡先用互動小測驗示範（之後可換成影片、音訊、或課程播放器）。
-          </p>
-          <label class="muted" style="font-size:13px">Q：滷製時「小火」的主要目的？</label>
-          <div style="margin-top:10px" class="row">
-            <button class="btn small" data-ans="A">A. 讓表面焦香更快</button>
-            <button class="btn small" data-ans="B">B. 讓味道慢慢滲入</button>
-            <button class="btn small" data-ans="C">C. 降低成本</button>
+    <footer id="contact">
+      <div class="container">
+        <div class="foot">
+          <div>
+            <b>聯繫</b><br/>
+            Email：<a href="mailto:hello@snacklab.tw">hello@snacklab.tw</a><br/>
+            IG：<a href="#" onclick="alert('之後換成你的 IG 連結');return false;">@snacklab.tw</a><br/>
+            <span class="small">（地址可選：桃園／台北）</span>
           </div>
-          <p id="quizResult" class="fine" style="margin-top:12px"></p>
-        </div>
-
-        <div class="box">
-          <h3 style="margin:0 0 6px">試算：我的學習目標</h3>
-          <p class="muted" style="margin:0 0 12px;font-size:13px">
-            填寫目標，系統生成建議（示範用，之後可接推薦引擎）。
-          </p>
-          <div class="form">
-            <input class="input" id="goal" placeholder="例如：想學會雞排醃料、炸粉比例、油溫控制" />
-            <button class="btn primary" id="btnSuggest">生成建議</button>
-            <div id="suggestOut" class="fine"></div>
-            <div class="row" style="margin-top:6px">
-              <button class="btn small" id="btnOpenLogin2">已有帳號登入</button>
-              <button class="btn small" id="btnOpenSignup3">免費註冊開始</button>
-            </div>
+          <div class="right">
+            <span class="small">© <span id="year"></span> 台灣小吃部</span><br/>
+            <span class="small">「像小吃店」極簡版本</span>
           </div>
         </div>
       </div>
-    </section>
+    </footer>
   </main>
 
-  <footer id="contact">
-    <div class="container">
-      <div class="foot">
-        <div>
-          <div style="font-weight:900;color:var(--text)">聯繫我們</div>
-          <div class="muted">Email：<a href="mailto:hello@snacklab.tw">hello@snacklab.tw</a></div>
-          <div class="muted">Instagram：<a href="#" onclick="alert('之後換成你的 IG 連結');return false;">@snacklab.tw</a></div>
-          <div class="muted hide-sm">地址：桃園／台北（可選）</div>
+  <!-- Course Modal -->
+  <div class="backdrop" id="backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <b id="mTitle">課程</b>
+        <div class="row">
+          <button class="btn" id="btnFav">收藏</button>
+          <button class="btn" id="btnClose">關閉</button>
         </div>
-        <div class="muted">© <span id="year"></span> 台灣小吃部．All rights reserved.</div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Modal -->
-  <div class="modal-backdrop" id="backdrop" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal">
-      <div class="modal-header">
-        <b id="modalTitle">會員</b>
-        <button class="btn small" id="btnClose">關閉</button>
-      </div>
-      <div class="tabs">
-        <button class="tab active" id="tabSignup">註冊</button>
-        <button class="tab" id="tabLogin">登入</button>
       </div>
       <div class="modal-body">
-        <form class="form" id="authForm">
-          <input class="input" id="email" type="email" placeholder="Email" required />
-          <input class="input" id="password" type="password" placeholder="密碼（示範用）" minlength="6" required />
-          <button class="btn primary" type="submit" id="authSubmit">建立帳號</button>
-          <p class="fine" id="authFine">※ 示範版：目前不會真的建立帳號，後續可串 Firebase / Supabase / 自建 API。</p>
-        </form>
+        <div class="grid2">
+          <div class="kv2">
+            <div class="k">基本資訊</div>
+            <div class="v" id="mMeta">—</div>
+            <p class="fine" id="mSummary" style="margin-top:10px">—</p>
+            <div class="row" id="mTags" style="margin-top:10px"></div>
+          </div>
+          <div class="kv2">
+            <div class="k">台味味譜（0–5）</div>
+            <div class="bars" id="mBars"></div>
+            <p class="fine" style="margin-top:10px">※ 先做味譜，之後再擴充食感/歸屬感。</p>
+          </div>
+        </div>
+        <div class="actions" style="margin-top:12px">
+          <a class="btn primary" href="#try" onclick="closeModal()">先體驗</a>
+          <a class="btn" href="#contact" onclick="closeModal()">詢問/合作</a>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-  let courses = [];
+    // ---------- State ----------
+    let courses = [];
+    let filtered = [];
+    let activeTag = "";
+    let currentCourseId = "";
+    const FAV_KEY = "snacklab_favs_v1";
 
-  const news = [
-    { date:"2026-01-27", title:"平台前端示範版上線", body:"首頁一頁式完成：熱門課程、最新資訊、體驗、註冊/登入（UI）。" },
-    { date:"2026-01-25", title:"新增：課程卡片模組", body:"支援 tag、時數、難度與 CTA，後續可接課程詳頁。" },
-    { date:"2026-01-20", title:"規劃：會員系統串接", body:"建議先用 Firebase / Supabase 快速完成註冊登入與權限。" }
-  ];
+    const news = [
+      { date:"2026-01-27", title:"小吃店極簡版上線", body:"先把網站動起來：菜單、公告、免登入體驗。後面再接付費/會員。"},
+      { date:"2026-01-25", title:"課程資料改用 courses.json", body:"方便未來從試算表同步生成，不影響前端。"},
+      { date:"2026-01-20", title:"味譜系統規劃中", body:"先做味譜（鹹甜酸辣鮮麻），之後擴充食感與歸屬感。"}
+    ];
 
-  const $ = (s)=>document.querySelector(s);
+    // ---------- Helpers ----------
+    const $ = (s)=>document.querySelector(s);
+    const esc = (s)=>String(s ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;");
+    const uniq = (arr)=>Array.from(new Set(arr.filter(Boolean)));
+    const clamp = (n,min,max)=>Math.max(min,Math.min(max,n));
 
-  function renderCourses(courseList){
-    const grid = $("#courseGrid");
-    grid.innerHTML = (courseList || []).map((c,i)=>`
-      <div class="card">
-        <div class="tag-row">${(c.tags || []).map(t=>`<span class="tag">${t}</span>`).join("")}</div>
-        <h3>${c.title || "（未命名課程）"}</h3>
-        <div class="meta">${(c.minutes ?? 0)} 分鐘｜${c.level || ""}｜${c.category || ""}</div>
-        <div class="actions">
-          <button class="btn small primary" onclick="openSignup()">${c.cta || "立即體驗"}</button>
-          <button class="btn small" onclick="openCourseDetail('${c.id || i}')">了解更多</button>
+    function readFavs(){
+      try{ return JSON.parse(localStorage.getItem(FAV_KEY) || "[]"); }catch{ return []; }
+    }
+    function writeFavs(ids){
+      localStorage.setItem(FAV_KEY, JSON.stringify(ids));
+      $("#favCount").textContent = String(ids.length);
+    }
+    function toggleFav(id){
+      const ids = readFavs();
+      const idx = ids.indexOf(id);
+      if(idx >= 0) ids.splice(idx,1); else ids.push(id);
+      writeFavs(ids);
+      return ids.includes(id);
+    }
+    function isFav(id){ return readFavs().includes(id); }
+
+    // ---------- Rendering ----------
+    function renderNews(){
+      const host = $("#newsList");
+      host.innerHTML = news.map(n=>`
+        <div class="note">
+          <div class="d">${esc(n.date)}</div>
+          <b>${esc(n.title)}</b>
+          <p>${esc(n.body)}</p>
         </div>
-      </div>
-    `).join("");
-  }
+      `).join("");
+    }
 
-  function renderNews(){
-    const list = $("#newsList");
-    list.innerHTML = news.map(n=>`
-      <div class="item">
-        <div class="date">${n.date}</div>
-        <div>
-          <b>${n.title}</b>
-          <p>${n.body}</p>
-        </div>
-      </div>
-    `).join("");
-  }
+    function renderChips(){
+      const allTags = uniq(courses.flatMap(c=>c.tags || []));
+      const hot = ["熱門","人氣","最新","台味","夜市","家常"];
+      const tags = uniq([...hot, ...allTags]).slice(0, 18);
+      const host = $("#chipRow");
+      host.innerHTML = tags.map(t=>`
+        <span class="chip ${t===activeTag ? "active":""}" data-tag="${esc(t)}">${esc(t)}</span>
+      `).join("");
+      host.querySelectorAll(".chip").forEach(ch=>{
+        ch.addEventListener("click", ()=>{
+          const t = ch.getAttribute("data-tag");
+          activeTag = (activeTag === t) ? "" : t;
+          renderChips();
+          applyFilter();
+        });
+      });
+    }
 
-  async function loadCourses(){
-    const grid = $("#courseGrid");
-    grid.innerHTML = `<div class="muted">載入課程中…</div>`;
+    function renderCategoryOptions(){
+      const cats = uniq(courses.map(c=>c.category));
+      const sel = $("#cat");
+      sel.innerHTML = `<option value="">全部分類</option>` + cats.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+    }
 
-    try{
-      // ✅ 這一行就是你問的 fetch 寫法
-      const res = await fetch("./data/courses.json", { cache: "no-store" });
-      if(!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      const data = await res.json();
-      courses = Array.isArray(data) ? data : [];
-
-      if(courses.length === 0){
-        grid.innerHTML = `<div class="muted">目前沒有已發布課程（courses.json 可能是空的或都被標記為 draft）。</div>`;
+    function renderMenu(list){
+      const host = $("#menuList");
+      if(!list.length){
+        host.innerHTML = `
+          <div class="menu-row">
+            <div class="menu-title"><b>找不到符合的菜單</b><span class="tag">換個關鍵字試試</span></div>
+            <div class="price">—</div>
+          </div>
+        `;
         return;
       }
 
-      renderCourses(courses);
-    }catch(err){
-      console.error("Failed to load courses.json:", err);
-      grid.innerHTML = `
-        <div class="muted">
-          讀取課程資料失敗。<br/>
-          1) 請確認 repo 內有 <b>data/courses.json</b><br/>
-          2) 且 GitHub Pages 已部署成功<br/>
-          3) 路徑是否正確：<b>./data/courses.json</b>
-        </div>
-      `;
-    }
-  }
+      host.innerHTML = list.map(c=>{
+        const meta = `${c.minutes ?? 0} 分｜${c.level || ""}｜${c.category || ""}`;
+        const tags = (c.tags || []).slice(0,3);
+        const favMark = isFav(c.id) ? "★" : "☆";
+        return `
+          <div class="menu-row" data-id="${esc(c.id)}">
+            <div>
+              <div class="menu-title">
+                <b>${esc(c.title)}</b>
+                ${tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("")}
+              </div>
+              <div class="menu-meta">${esc(meta)}</div>
+            </div>
+            <div class="price">
+              ${favMark} 收藏<br/>
+              <span class="small">點我看詳情</span>
+            </div>
+          </div>
+        `;
+      }).join("");
 
-  function openCourseDetail(id){
-    const c = (courses || []).find(x => x.id === id) || null;
-    alert(c ? `${c.title}\n\n${c.summary || ""}` : `Course: ${id}`);
-  }
-
-  // Modal
-  const backdrop = $("#backdrop");
-  const tabSignup = $("#tabSignup");
-  const tabLogin = $("#tabLogin");
-  const authSubmit = $("#authSubmit");
-  const modalTitle = $("#modalTitle");
-  const authFine = $("#authFine");
-  let mode = "signup";
-
-  function setMode(m){
-    mode = m;
-    const isSignup = mode === "signup";
-    tabSignup.classList.toggle("active", isSignup);
-    tabLogin.classList.toggle("active", !isSignup);
-    authSubmit.textContent = isSignup ? "建立帳號" : "登入";
-    modalTitle.textContent = isSignup ? "免費註冊" : "會員登入";
-    authFine.textContent = "※ 示範版：目前不會真的" + (isSignup ? "建立帳號" : "登入") + "，後續可串 Firebase / Supabase / 自建 API。";
-  }
-
-  function openModal(m){
-    setMode(m);
-    backdrop.style.display = "flex";
-    backdrop.setAttribute("aria-hidden","false");
-    $("#email").focus();
-  }
-  function closeModal(){
-    backdrop.style.display = "none";
-    backdrop.setAttribute("aria-hidden","true");
-  }
-
-  function openSignup(){ openModal("signup"); }
-  function openLogin(){ openModal("login"); }
-
-  function bindEvents(){
-    // Nav / CTA buttons
-    $("#btnSignup")?.addEventListener("click", openSignup);
-    $("#btnLogin")?.addEventListener("click", openLogin);
-
-    $("#btnOpenSignup2")?.addEventListener("click", openSignup); // ✅ 你原本漏了這個
-    $("#btnOpenSignup3")?.addEventListener("click", openSignup);
-    $("#btnOpenLogin2")?.addEventListener("click", openLogin);
-
-    $("#btnClose")?.addEventListener("click", closeModal);
-    backdrop?.addEventListener("click", (e)=>{ if(e.target === backdrop) closeModal(); });
-
-    tabSignup?.addEventListener("click", ()=>setMode("signup"));
-    tabLogin?.addEventListener("click", ()=>setMode("login"));
-
-    // Fake auth submit
-    $("#authForm")?.addEventListener("submit", (e)=>{
-      e.preventDefault();
-      const email = $("#email").value.trim();
-      alert((mode==="signup"?"已收到註冊資料：":"已收到登入資料：") + email + "（示範）");
-      closeModal();
-    });
-
-    // Quiz
-    document.querySelectorAll("[data-ans]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const ans = btn.getAttribute("data-ans");
-        $("#quizResult").textContent = (ans==="B")
-          ? "✅ 正確！小火讓時間幫你把味道慢慢滲入，也更不易焦苦。"
-          : "❌ 不太對喔！提示：重點在『慢慢滲入』與『穩定』。";
+      host.querySelectorAll(".menu-row").forEach(row=>{
+        row.addEventListener("click", ()=>{
+          openCourse(row.getAttribute("data-id"));
+        });
       });
-    });
+    }
 
-    // Suggest
-    $("#btnSuggest")?.addEventListener("click", ()=>{
-      const g = $("#goal").value.trim();
-      $("#suggestOut").textContent = g
-        ? `建議你從「基礎刀工 → 比例與秤重 → 火候節奏」三段練起。你的目標：${g}`
-        : "先寫下你的學習目標，我再幫你生成建議。";
-    });
-  }
+    function updateKiosk(){
+      $("#todayCount").textContent = String(courses.length);
+      const catCount = new Map();
+      courses.forEach(c=>{
+        const k = c.category || "其他";
+        catCount.set(k, (catCount.get(k) || 0) + 1);
+      });
+      let top = "—", best = 0;
+      for(const [k,v] of catCount.entries()){ if(v>best){ best=v; top=k; } }
+      $("#topCat").textContent = top;
+      writeFavs(readFavs());
+    }
 
-  // ✅ 最穩的初始化方式：等 DOM 都 ready 再跑
-  window.addEventListener("DOMContentLoaded", async ()=>{
-    bindEvents();
-    renderNews();
-    $("#year").textContent = new Date().getFullYear();
-    await loadCourses();
-  });
-</script>
+    // ---------- Filtering ----------
+    function applyFilter(){
+      const q = ($("#q").value || "").trim().toLowerCase();
+      const cat = $("#cat").value || "";
+      const level = $("#level").value || "";
+
+      filtered = courses.filter(c=>{
+        const inQ =
+          !q ||
+          (c.title || "").toLowerCase().includes(q) ||
+          (c.summary || "").toLowerCase().includes(q) ||
+          (c.category || "").toLowerCase().includes(q) ||
+          (c.tags || []).some(t => String(t).toLowerCase().includes(q));
+
+        const inCat = !cat || c.category === cat;
+        const inLevel = !level || c.level === level;
+        const inTag = !activeTag || (c.tags || []).includes(activeTag);
+
+        return inQ && inCat && inLevel && inTag;
+      });
+
+      renderMenu(filtered);
+    }
+
+    // ---------- Modal ----------
+    const backdrop = $("#backdrop");
+
+    function closeModal(){
+      backdrop.style.display = "none";
+      backdrop.setAttribute("aria-hidden","true");
+      currentCourseId = "";
+    }
+
+    function openCourse(id){
+      const c = courses.find(x=>x.id === id);
+      if(!c) return;
+
+      currentCourseId = id;
+      $("#mTitle").textContent = c.title || "課程";
+      $("#mMeta").textContent = `${c.minutes ?? 0} 分鐘｜${c.level || ""}｜${c.category || ""}`;
+      $("#mSummary").textContent = c.summary || "（尚未填寫摘要）";
+
+      const tags = uniq([...(c.tags||[]), ...(c.belonging||[])]);
+      $("#mTags").innerHTML = tags.slice(0, 10).map(t=>`<span class="tag">${esc(t)}</span>`).join("");
+
+      const f = c.flavour || {};
+      const rows = [
+        ["鹹", f.salty ?? 0, "fill"],
+        ["甜", f.sweet ?? 0, "fill alt"],
+        ["酸", f.sour ?? 0, "fill"],
+        ["辣", f.spicy ?? 0, "fill alt"],
+        ["鮮", f.umami ?? 0, "fill"],
+        ["麻", f.numbing ?? 0, "fill alt"]
+      ];
+      $("#mBars").innerHTML = rows.map(([name,val,klass])=>{
+        const v = clamp(Number(val)||0,0,5);
+        return `
+          <div class="bar">
+            <span>${name}</span>
+            <div class="track"><div class="${klass}" style="width:${v*20}%"></div></div>
+            <span>${v}</span>
+          </div>
+        `;
+      }).join("");
+
+      const fav = isFav(id);
+      $("#btnFav").textContent = fav ? "已收藏 ★" : "收藏 ☆";
+
+      backdrop.style.display = "flex";
+      backdrop.setAttribute("aria-hidden","false");
+    }
+
+    // ---------- Load ----------
+    async function loadCourses(){
+      try{
+        const res = await fetch("./data/courses.json", { cache: "no-store" });
+        if(!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        courses = Array.isArray(data) ? data : [];
+      }catch(err){
+        console.error(err);
+        courses = [];
+      }
+    }
+
+    // ---------- Events ----------
+    function bindEvents(){
+      $("#btnReset").addEventListener("click", ()=>{
+        $("#q").value = "";
+        $("#cat").value = "";
+        $("#level").value = "";
+        activeTag = "";
+        renderChips();
+        applyFilter();
+      });
+
+      ["q","cat","level"].forEach(id=>{
+        $("#"+id).addEventListener("input", applyFilter);
+        $("#"+id).addEventListener("change", applyFilter);
+      });
+
+      // Quiz
+      document.querySelectorAll("[data-ans]").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          const ans = btn.getAttribute("data-ans");
+          $("#quizOut").textContent = (ans==="B")
+            ? "✅ 對：小火讓味道慢慢滲入，也比較穩定不易焦。"
+            : "❌ 不太對：提示是『慢慢滲入』與『穩定』。";
+        });
+      });
+
+      // Pick 3
+      $("#btnPick").addEventListener("click", ()=>{
+        if(!courses.length){ $("#pickOut").textContent = "目前沒有菜單資料。"; return; }
+        const shuffled = [...courses].sort(()=>Math.random()-0.5).slice(0,3);
+        $("#pickOut").innerHTML = shuffled.map(c=>`• <a href="#menu" onclick="openCourse('${esc(c.id)}')">${esc(c.title)}</a>`).join("<br/>");
+      });
+
+      // Fav modal show
+      $("#btnShowFav").addEventListener("click", ()=>{
+        const ids = readFavs();
+        if(!ids.length){ alert("你還沒有收藏。先點幾個菜單看看～"); return; }
+        const list = courses.filter(c=>ids.includes(c.id));
+        const names = list.map(c=>`• ${c.title}`).join("\n");
+        alert("我的收藏：\n" + names);
+      });
+
+      // Modal close
+      $("#btnClose").addEventListener("click", closeModal);
+      backdrop.addEventListener("click", (e)=>{ if(e.target === backdrop) closeModal(); });
+
+      // Fav button
+      $("#btnFav").addEventListener("click", ()=>{
+        if(!currentCourseId) return;
+        const nowFav = toggleFav(currentCourseId);
+        $("#btnFav").textContent = nowFav ? "已收藏 ★" : "收藏 ☆";
+        // refresh menu marks
+        applyFilter();
+      });
+    }
+
+    // ---------- Init ----------
+    window.addEventListener("DOMContentLoaded", async ()=>{
+      $("#year").textContent = new Date().getFullYear();
+      renderNews();
+      bindEvents();
+
+      await loadCourses();
+      updateKiosk();
+      renderCategoryOptions();
+      renderChips();
+      applyFilter();
+    });
+  </script>
 </body>
 </html>
