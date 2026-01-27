@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>登入｜台灣小吃部</title>
+</head>
+<body>
+  <h1>登入</h1>
+
+  <label>Email</label><br/>
+  <input id="email" type="email" placeholder="you@example.com"/><br/><br/>
+
+  <label>密碼</label><br/>
+  <input id="password" type="password" placeholder="********"/><br/><br/>
+
+  <button id="btnLogin">登入</button>
+
+  <p id="msg"></p>
+
+  <script>
+    // 先做假登入（讓你前台流程跑起來）
+    document.getElementById('btnLogin').addEventListener('click', () => {
+      const email = document.getElementById('email').value.trim();
+      if (!email) return alert('請輸入 Email');
+
+      // 先用 localStorage 模擬登入狀態（之後換 Firebase Auth）
+      localStorage.setItem('twSnackLabSession', JSON.stringify({ email, ts: Date.now() }));
+      location.href = '/dashboard.html';
+    });
+  </script>
+</body>
+</html>
